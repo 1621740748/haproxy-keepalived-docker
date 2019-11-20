@@ -60,3 +60,24 @@ DR模式是在局域网内最简单的映射模式，原理可参见《LVS手册
 ifconfig lo:0 192.168.2.100 netmask 255.255.255.0 up
 ifconfig lo:0 172.20.0.150  netmask 255.255.255.0 up
 
+-------------------------------------------------------------
+要想把用户的请求调度给后端的RS，是需要经过调度算法来实现，LVS常用以下几种调度算法：
+固定调度算法：rr，wrr，dh，sh
+动态调度算法：wlc，lc，lblc，lblcr
+
+（1）rr 轮叫调度（Round Robin），这种算法是最简单的，不管RS的后端配置和处理能力，均衡的分发下去
+
+（2）wrr 加权轮叫（Weight Round Robin），比上面的算法多了一个权重的概念，可以给RS设置权重，权重越高，那么分发的请求数越多，权重取值范围0-100
+
+（3）LC最少链接（least connection），这个算法会根据后端的RS的连接数来决定把请求发给谁，比如RS1连接数比RS2连接数少，那么请求优先发给RS1
+
+（4）WLC 加权最少链接（Weighted Least Connecttion）比最少链接算法多了一个权重
+
+（5）Dh 目的地址哈希调度（destination hashing）以目的地址为关键字查找一个静态hash表来获得需要的RS
+
+（6）SH 源地址哈希调度（source hashing）以源地址为关键字查找一个静态hash表来获得需要的RS
+
+（7）lblc 最小连接数调度（least-connection）,IPVS表存储了所有活动的连接。LB会比较将连接请求发送到当前连接最少的RS
+
+（8）Lblcr  带复制的基于本地的最少连接：是LBLC算法的改进
+
