@@ -1,11 +1,6 @@
 # HA
 
 
-
-宿主机需要开启ip_vs
-sudo modprobe ip_vs
-
-
 ### Getting docker's private ip address
 
 ```sh
@@ -13,6 +8,11 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(d
 ```
 
 问题和解决：
+
+宿主机需要开启ip_vs
+sudo modprobe ip_vs
+
+---------------------------------------------------------------------
 
 keepalived配置完成后vip无法平通，虚拟服务器端口无法访问
 2019-03-19 14:32:43 灬紫荆灬 阅读数 1885更多
