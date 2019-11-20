@@ -9,8 +9,8 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(d
 
 问题和解决：
 
-宿主机需要开启ip_vs
-sudo modprobe ip_vs
+宿主机需要开启ip_vs  
+sudo modprobe ip_vs  
 
 ---------------------------------------------------------------------
 
@@ -57,8 +57,8 @@ real_server 192.168.2.67 80
 
 DR模式是在局域网内最简单的映射模式，原理可参见《LVS手册》。但只在keepalived主机上配置lb_kind DR是无法访问到real_server的，DR模式会将目标地址为虚拟IP地址原封不动的传给real_server。real_server发现这不是我的IP，因此会丢弃掉该包，所以这边得欺骗一下real_server，让他认为这是他的地址。做法很简单，在real_server的lo回环口上添加那个虚拟IP，这样real_server就会认为自己就是VIP这台服务器。切记在lo上设置，不要在真实网卡上设置，道理留给大家思考。
 
-ifconfig lo:0 192.168.2.100 netmask 255.255.255.0 up
-ifconfig lo:0 172.20.0.150  netmask 255.255.255.0 up
+ifconfig lo:0 192.168.2.100 netmask 255.255.255.0 up  
+ifconfig lo:0 172.20.0.150  netmask 255.255.255.0 up  
 
 -------------------------------------------------------------
 要想把用户的请求调度给后端的RS，是需要经过调度算法来实现，LVS常用以下几种调度算法：
