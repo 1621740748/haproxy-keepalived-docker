@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.6"
 
 networks:
   ha-stack:
@@ -58,6 +58,10 @@ services:
         ipv4_address: 172.20.0.50
         aliases:
           - haproxy-a.ha.stack
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
     volumes:
       - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
 
@@ -68,6 +72,10 @@ services:
         ipv4_address: 172.20.0.60
         aliases:
           - haproxy-b.ha.stack
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
     volumes:
       - "./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
 
